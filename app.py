@@ -1,6 +1,6 @@
 #encoding: utf-8
 
-from flask import Flask, url_for, redirect
+from flask import Flask, url_for, redirect, render_template
 import config
 
 app = Flask(__name__)
@@ -8,13 +8,15 @@ app.config.from_object(config)
 
 @app.route('/')
 def index():
-    login_url = url_for('login')
-    return redirect(login_url)
-    return u'首页'
+    return render_template('index.html')
 
 @app.route('/login/')
 def login():
-    return u'登录页面'
+    return render_template('login.html')
+
+@app.route('/register/')
+def register():
+    return render_template('register.html')
 
 @app.route('/question/')
 def question():
