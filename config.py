@@ -1,6 +1,6 @@
 #encoding: utf-8
 
-DEBUG = True
+DEBUG = False
 
 # SECRET_KEY
 # SQLALCHEMY_DB
