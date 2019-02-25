@@ -1,7 +1,8 @@
 #encoding: utf-8
 
 from flask import Flask, url_for, redirect, render_template
-import config
+import config, pymysql
+
 
 app = Flask(__name__)
 app.config.from_object(config)
@@ -17,6 +18,16 @@ def login():
 @app.route('/register/')
 def register():
     return render_template('register.html')
+
+@app.route('/user_register/')
+def user_register():
+    db = pymysql.connect('localhost', 'root', '236326', 'myproj', 3306)
+    cursor = db.cursor()
+    sql = "INSERT INTO users VALUES('%s', '%s') % (request.from.get('id'), request.from.get('password'))"
+    cursor.execute(sql)
+    db.commit()
+    db.close()
+    return render_template('login.html')
 
 @app.route('/question/')
 def question():
