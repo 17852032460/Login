@@ -1,8 +1,7 @@
 #encoding: utf-8
 
-from flask import Flask, url_for, redirect, render_template
+from flask import Flask, url_for, redirect, render_template, request
 import config, pymysql
-
 
 app = Flask(__name__)
 app.config.from_object(config)
@@ -19,16 +18,37 @@ def login():
 def register():
     return render_template('register.html')
 
-@app.route('/user_register', methods=['GET', 'POST'])
+@app.route('/user_register/', methods=['GET', 'POST'])
 def user_register():
-    print u'hello world!'
-    db = pymysql.connect('localhost', 'root', '236326', 'myproj', 3306)
+    get_id = request.form['id']
+    get_password = request.form['password']
+    get_repassword = request.form['repassword']
+    if get_password == get_repassword:
+        db = pymysql.connect(host = 'localhost', port = 3306, user = 'root', password = '236326', db = 'myproj', charset = 'utf8')
+        cursor = db.cursor()
+        sql = "INSERT INTO users(id, password) VALUES('%s', '%s')" % (get_id, get_password)
+        cursor.execute(sql)
+        db.commit()
+        db.close()
+        return redirect('/login/')
+    else:
+        return redirect('/register/')
+
+@app.route('/user_login/', methods=['GET', 'POST'])
+def user_login():
+    get_id = request.form['id']
+    get_password = request.form['password']
+    db = pymysql.connect(host='localhost', port=3306, user='root', password='236326', db='myproj', charset='utf8')
     cursor = db.cursor()
-    sql = "INSERT INTO users VALUES('%s', '%s') % (request.from.get('id'), request.from.get('password'))"
+    sql = "SELECT password FROM users where id = '%s'" % get_id
     cursor.execute(sql)
+    password = cursor.fetchone()
     db.commit()
     db.close()
-    return render_template('login.html')
+    if password[0] == get_password:
+        return redirect('/question')
+    else:
+        return redirect('/login/')
 
 @app.route('/question/')
 def question():
