@@ -46,13 +46,13 @@ def user_login():
     db.commit()
     db.close()
     if password[0] == get_password:
-        return redirect('/question')
+        return redirect('/query/')
     else:
         return redirect('/login/')
 
-@app.route('/question/')
+@app.route('/query/', methods=['GET', 'POST'])
 def question():
-    return '查询页面'
+    return render_template('quert.html')
 
 if __name__ == '__main__':
     app.run()
