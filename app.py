@@ -33,7 +33,7 @@ def user_register():
     get_nickname = request.form['nickname']
     get_password = request.form['password']
     get_repassword = request.form['repassword']
-    if get_password == get_repassword:
+    if get_password == get_repassword and get_password != '':
         db = pymysql.connect(host = 'localhost', port = 3306, user = 'root', password = '236326', db = 'myproj', charset = 'utf8')
         cursor = db.cursor()
         sql_query = "SELECT username FROM users where username = '%s'" % get_username
