@@ -6,6 +6,24 @@
 </head>
 <body>
     <h1>查询页面</h1>
+    <form action = '/user_query/' method="post">
+        <h3>请选择时间</h3>
+        <input type="radio" name="week" value="周一" />周一
+        <input type="radio" name="week" value="周二" />周二
+        <input type="radio" name="week" value="周三" />周三
+        <input type="radio" name="week" value="周四" />周四
+        <input type="radio" name="week" value="周五" />周五
+        <input type="radio" name="week" value="周六" />周六
+        <input type="radio" name="week" value="周日" />周日
+        <br />
+        <h3>请选择节数</h3>
+        <input type="radio" name="section" value="1、2节" />1、2节
+        <input type="radio" name="section" value="3、4节" />3、4节
+        <input type="radio" name="section" value="5、6节" />5、6节
+        <input type="radio" name="section" value="7、8节" />7、8节
+        <br />
+        <input type="submit" value="确定"/>
+    </form>
     <a href="/">返回主页</a><br />
 </body>
 </html>

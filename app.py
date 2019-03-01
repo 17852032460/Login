@@ -72,5 +72,18 @@ def user_login():
 def question():
     return render_template('query.html')
 
+@app.route('/user_query/', methods=['GET', 'POST'])
+def user_query():
+    get_week = request.form['week']
+    get_section = request.form['section']
+    db = pymysql.connect(host='localhost', port=3306, user='root', password='236326', db='myproj', charset='utf8')
+    cursor = db.cursor()
+    sql = "SELECT * FROM schedule where week = '%s' and section = '%s'" % (get_week, get_section)
+    cursor.execute(sql)
+    data = cursor.fetchone()
+    db.commit()
+    db.close()
+    return render_template('result.html', result=data)
+
 if __name__ == '__main__':
     app.run()
